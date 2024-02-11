@@ -35,9 +35,7 @@ public class BulletIcon extends JPanel {
         super.paintComponent(g);
         int bulletX = (int) bullet.getX(); 
         int bulletY = (int) bullet.getY(); 
-        int bulletWidth = 10; 
-        int bulletHeight = 10; 
-        g.drawImage(bulletImage, bulletX, bulletY, bulletWidth, bulletHeight, this);
+        g.drawImage(bulletImage, bulletX+5, bulletY+3, Bullet.BULLET_WIDTH, Bullet.BULLET_HEIGHT, this);
     }
 
 

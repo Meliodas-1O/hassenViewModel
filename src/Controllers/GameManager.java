@@ -40,7 +40,7 @@ public class GameManager implements ActionListener {
     private void moveBullets() {
         Tank enemyTank = new Tank(1500, 0, 10, 30, 50, 130);
         for (Bullet bullet : tankIcon.getBullets()) {
-            bullet.move(enemyTank);
+            bullet.move(enemyTank, tankIcon.getEnemies());
         }
     }
     private void moveEnemies() {

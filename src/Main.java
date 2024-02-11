@@ -44,11 +44,9 @@ public class Main {
 
 
         Random random = new Random();
-        for (int i = 0; i < 03; i++) {
+        for (int i = 0; i < 10; i++) {
             int enemyX = random.nextInt(frame.getWidth() - 200) + 100;
             int enemyY = random.nextInt(frame.getHeight() - 200) + 100;
-            System.out.println("Je sis X " + enemyX);
-            System.out.println("Je sis Y " + enemyY);
             EnemyIcon enemyIcon = new EnemyIcon(enemyX, enemyY);
             gameManager.addEnemy(enemyIcon);
         } 

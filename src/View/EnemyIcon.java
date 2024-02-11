@@ -33,9 +33,7 @@ public class EnemyIcon extends JPanel {
         super.paintComponent(g);
         int enemyX = (int) enemy.getX();
         int enemyY = (int) enemy.getY();
-        int enemyWidth = 30; 
-        int enemyHeight = 30; 
-        g.drawImage(enemyImage, enemyX, enemyY, enemyWidth, enemyHeight, this);
+        g.drawImage(enemyImage, enemyX, enemyY, Enemy.ENEMY_WIDTH, Enemy.ENEMY_HEIGHT, this);
     }
 
     public Enemy getEnemy() {

@@ -4,7 +4,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import Models.Bullet;
+import Models.Enemy;
 import Models.Tank;
+import Utils.PhysicsManager;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -20,6 +22,21 @@ public class TankIcon extends JPanel {
     private List<Bullet> bullets  = new ArrayList<>(); 
     public List<EnemyIcon> enemies = new ArrayList<>();
 
+    public EnemyIcon findClosestEnemy() {
+        double closestDistance = Double.MAX_VALUE;
+        EnemyIcon closestEnemy = null;
+        Tank playerTank = this.tank;
+        
+        for (EnemyIcon enemyIcon : enemies) {
+            Enemy enemy = enemyIcon.getEnemy();
+            double distance = PhysicsManager.distance(playerTank, enemy);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestEnemy = enemyIcon;
+            }
+        }
+        return closestEnemy;
+    }
 
 
     public TankIcon(String imagePath) {
@@ -44,19 +61,30 @@ public class TankIcon extends JPanel {
         int tankY = centerY - tankHeight / 2;
         this.tank.setX(tankX);
         this.tank.setY(tankY);
-        g.drawImage(tankImage, tankX, tankY,tankWidth,tankHeight, this);
+        g.drawImage(tankImage, tankX-20, tankY-10, Tank.TANK_WIDTH, Tank.TANK_HEIGHT, this);
 
         // The radius
         g.setColor(Color.ORANGE);
         int circleRadius = this.tank.radius;
-        g.drawOval(centerX - circleRadius, centerY - circleRadius, 2 * circleRadius, 2 * circleRadius);
+        g.drawOval( centerX - circleRadius - 20, centerY - circleRadius - 10, 2 * circleRadius, 2 * circleRadius);
+        
+        // List<EnemyIcon> enemiesToRemove = new ArrayList<>();
+        // for (EnemyIcon enemyIcon : enemies) {
+        //     Enemy enemy = enemyIcon.getEnemy();
+        //     double distance = PhysicsManager.distance(this.tank, enemy);
+        //     if (distance < this.tank.radius) {
+        //         enemiesToRemove.add(enemyIcon);
+        //     }
+        // }
+        // enemies.removeAll(enemiesToRemove);
 
         // The bullets
         for (Bullet bullet : bullets) {
             BulletIcon bulletIcon = new BulletIcon(bullet);
             bulletIcon.paintComponent(g);
-            Tank tesTank = new Tank(1500, 155, 10, 30, 50, 130);
-            bulletIcon.getBullet().move(tesTank);     
+            EnemyIcon closEnemyIcon = findClosestEnemy();
+            if(closEnemyIcon != null)
+            bulletIcon.getBullet().move(closEnemyIcon.getEnemy(), this.enemies);     
         }
         
         for (EnemyIcon enemyIcon : enemies) {

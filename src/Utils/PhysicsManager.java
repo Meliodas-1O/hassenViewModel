@@ -1,5 +1,7 @@
 package Utils;
 
+import Models.Bullet;
+import Models.Enemy;
 import Models.Vehicule;
 
 public class PhysicsManager {
@@ -23,5 +25,15 @@ public class PhysicsManager {
         } else {
             A.setY(current + increment);
         }
+    }
+
+    public static double distance(Vehicule player, Vehicule enemy){
+       return Math.sqrt(Math.pow(player.getX() - enemy.getX(), 2) + Math.pow(player.getY() - enemy.getY(), 2));
+    }
+
+    public static boolean isColliding(Vehicule bullet, Vehicule enemy) {
+        double distanceSquared = Math.pow(bullet.getX() - enemy.getX(), 2) + Math.pow(bullet.getY() - enemy.getY(), 2);
+        double collisionDistanceSquared = Math.pow((Bullet.BULLET_WIDTH + Enemy.ENEMY_WIDTH) / 2, 2);
+        return distanceSquared <= collisionDistanceSquared;
     }
 }
