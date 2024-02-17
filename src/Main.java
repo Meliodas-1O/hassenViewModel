@@ -2,13 +2,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import Controllers.GameManager;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import View.EnemyIcon;
 import View.TankIcon;
@@ -17,18 +16,9 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-
-
         
         TankIcon tankIcon = new TankIcon();
         tankIcon.setBackground(Color.BLACK);
-
-        JFrame frame = new JFrame("Tank Icon");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(tankIcon); 
-        frame.pack(); 
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setVisible(true);
 
         // Create the top bar panel
         JPanel topBarPanel = new JPanel();
@@ -43,8 +33,9 @@ public class Main {
         JLabel scoreLabel = new JLabel("Score: 0");
         scoreLabel.setForeground(Color.WHITE);
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel levelLabel = new JLabel("Level: 1 ");
+        JLabel levelLabel = new JLabel("Level: 1    ");
         levelLabel.setForeground(Color.WHITE); 
         levelLabel.setFont(new Font("Arial", Font.BOLD, 16)); 
 
@@ -54,9 +45,18 @@ public class Main {
         topBarPanel.add(levelLabel, BorderLayout.EAST);
 
         GameManager gameManager = new GameManager(tankIcon);
+
+        JFrame frame = new JFrame("Tank Icon");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(tankIcon); 
         frame.requestFocus();
         frame.add(topBarPanel, BorderLayout.NORTH); 
         frame.add(tankIcon, BorderLayout.CENTER);
+        frame.pack(); 
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setVisible(true);
+
+
         gameManager.startGame();
 
 
