@@ -73,6 +73,7 @@ public class TankIcon extends JPanel {
         g.drawImage(tankImage, tankX-20, tankY-10, Tank.TANK_WIDTH, Tank.TANK_HEIGHT, this);
 
 
+        List<EnemyIcon> enemiesToRemove = new ArrayList<>();
 
         // The revolving ball
 
@@ -80,17 +81,17 @@ public class TankIcon extends JPanel {
             SatelliteIcon satelliteIcon = new SatelliteIcon(satellite);
             satelliteIcon.paintComponent(g);
             satelliteIcon.getSatellite().move();
-        }
-
-
-        List<EnemyIcon> enemiesToRemove = new ArrayList<>();
-        for (EnemyIcon enemyIcon : enemies) {
-            Enemy enemy = enemyIcon.getEnemy();
-            double distance = PhysicsManager.distance(this.tank, enemy);
-            if (distance < this.tank.radius) {
-                enemiesToRemove.add(enemyIcon);
+            for (EnemyIcon enemyIcon : enemies) {
+                Enemy enemy = enemyIcon.getEnemy();
+                double distance = PhysicsManager.distance(satellite, enemy);
+                if (distance < 20) {
+                    enemiesToRemove.add(enemyIcon);
+                }
             }
         }
+
+
+
         enemies.removeAll(enemiesToRemove);
 
         // The bullets

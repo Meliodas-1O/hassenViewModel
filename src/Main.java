@@ -17,6 +17,7 @@ public class Main {
 
     public static void main(String[] args) {
         
+        int level = 1;
         TankIcon tankIcon = new TankIcon();
         tankIcon.setBackground(Color.BLACK);
 
@@ -35,7 +36,7 @@ public class Main {
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 16));
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel levelLabel = new JLabel("Level: 1    ");
+        JLabel levelLabel = new JLabel("Level: "+ level + "    ");
         levelLabel.setForeground(Color.WHITE); 
         levelLabel.setFont(new Font("Arial", Font.BOLD, 16)); 
 
@@ -58,7 +59,7 @@ public class Main {
 
 
         gameManager.startGame();
-
+        gameManager.satelliteBro();
 
         Random random = new Random();
         for (int i = 0; i < 100; i++) {

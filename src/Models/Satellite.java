@@ -26,7 +26,7 @@ public class Satellite extends Vehicule{
         double ballCenterY = this.tank.getY()+10;
         this.setX(ballCenterX + Math.cos(speed) * tank.radius) ;
         this.setY(ballCenterY + Math.sin(speed) * tank.radius);   
-        speed++;     
+        speed += 0.01;     
     }
 
 }

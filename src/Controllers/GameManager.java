@@ -60,7 +60,6 @@ public class GameManager implements ActionListener {
     private void addEnemyRandomly() {
         Random random = new Random();
         if((random.nextInt(1000 - 200) + 100)%20==0 ){
-            satelliteBro();
             int enemyX = random.nextInt(1000 - 200) + 100;
             int enemyY = random.nextInt(1000 - 200) + 100;
             EnemyIcon enemyIcon = new EnemyIcon(enemyX, enemyY);
