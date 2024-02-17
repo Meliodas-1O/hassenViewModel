@@ -110,7 +110,7 @@ public class TankIcon extends JPanel {
        // Ennemies 
         for (EnemyIcon enemyIcon : enemies) {
             enemyIcon.paintComponent(g);
-            //enemyIcon.getEnemy().attack(tank);
+            enemyIcon.getEnemy().attack(tank);
         }
         
     }

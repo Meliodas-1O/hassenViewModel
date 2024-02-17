@@ -33,20 +33,20 @@ public class Main {
         // Create the top bar panel
         JPanel topBarPanel = new JPanel();
         topBarPanel.setLayout(new BorderLayout());
-        topBarPanel.setBackground(Color.BLACK); // Set background color to black
-        topBarPanel.setPreferredSize(new Dimension(0, 50)); // Increase height
+        topBarPanel.setBackground(Color.BLACK); 
+        topBarPanel.setPreferredSize(new Dimension(0, 50)); 
 
         JLabel killedLabel = new JLabel("Enemies Killed: 0");
-        killedLabel.setForeground(Color.WHITE); // Set text color to white
-        killedLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Increase font size
+        killedLabel.setForeground(Color.WHITE);
+        killedLabel.setFont(new Font("Arial", Font.BOLD, 16)); 
 
         JLabel scoreLabel = new JLabel("Score: 0");
-        scoreLabel.setForeground(Color.WHITE); // Set text color to white
-        scoreLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Increase font size
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
-        JLabel levelLabel = new JLabel("Level: 1 "); // Add padding to the right
-        levelLabel.setForeground(Color.WHITE); // Set text color to white
-        levelLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Increase font size
+        JLabel levelLabel = new JLabel("Level: 1 ");
+        levelLabel.setForeground(Color.WHITE); 
+        levelLabel.setFont(new Font("Arial", Font.BOLD, 16)); 
 
         // Add components to the top bar panel
         topBarPanel.add(killedLabel, BorderLayout.WEST);
@@ -54,18 +54,9 @@ public class Main {
         topBarPanel.add(levelLabel, BorderLayout.EAST);
 
         GameManager gameManager = new GameManager(tankIcon);
-
-        frame.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    gameManager.handleShoot();
-                }
-            }
-        });
         frame.requestFocus();
-        frame.add(topBarPanel, BorderLayout.NORTH); // Add the top bar panel to the top of the frame
-        frame.add(tankIcon, BorderLayout.CENTER); //
+        frame.add(topBarPanel, BorderLayout.NORTH); 
+        frame.add(tankIcon, BorderLayout.CENTER);
         gameManager.startGame();
 
 
