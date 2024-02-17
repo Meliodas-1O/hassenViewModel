@@ -10,7 +10,6 @@ import Models.Tank;
 import Utils.PhysicsManager;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.io.File;
@@ -24,7 +23,6 @@ public class TankIcon extends JPanel {
     private List<Bullet> bullets  = new ArrayList<>(); 
     private List<Satellite> satellites  = new ArrayList<>(); 
     public List<EnemyIcon> enemies = new ArrayList<>();
-    private  double rotationSpeedFactor = 1; 
 
 
     public EnemyIcon findClosestEnemy() {

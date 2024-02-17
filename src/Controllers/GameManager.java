@@ -76,7 +76,7 @@ public class GameManager implements ActionListener {
     public void handleShoot() {
         tankIcon.getTank().shoot(tankIcon);
     }
-    public void satelliteBro(){
+    public void addSatellite(){
         tankIcon.getTank().moveSatellite(tankIcon);
     }
 

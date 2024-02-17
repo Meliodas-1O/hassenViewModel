@@ -59,7 +59,7 @@ public class Main {
 
 
         gameManager.startGame();
-        gameManager.satelliteBro();
+        gameManager.addSatellite();
 
         Random random = new Random();
         for (int i = 0; i < 100; i++) {

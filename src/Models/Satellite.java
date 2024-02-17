@@ -1,7 +1,5 @@
 package Models;
 
-import java.awt.Color;
-
 import Utils.PhysicsManager;
 
 public class Satellite extends Vehicule{
