@@ -60,6 +60,7 @@ public class GameManager implements ActionListener {
     private void addEnemyRandomly() {
         Random random = new Random();
         if((random.nextInt(1000 - 200) + 100)%20==0 ){
+            satelliteBro();
             int enemyX = random.nextInt(1000 - 200) + 100;
             int enemyY = random.nextInt(1000 - 200) + 100;
             EnemyIcon enemyIcon = new EnemyIcon(enemyX, enemyY);
@@ -75,6 +76,9 @@ public class GameManager implements ActionListener {
 
     public void handleShoot() {
         tankIcon.getTank().shoot(tankIcon);
+    }
+    public void satelliteBro(){
+        tankIcon.getTank().moveSatellite(tankIcon);
     }
 
     public void addEnemy(EnemyIcon enemyIcon) {

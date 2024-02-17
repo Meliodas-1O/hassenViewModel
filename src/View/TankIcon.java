@@ -5,10 +5,10 @@ import javax.swing.JPanel;
 
 import Models.Bullet;
 import Models.Enemy;
+import Models.Satellite;
 import Models.Tank;
 import Utils.PhysicsManager;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -22,9 +22,9 @@ public class TankIcon extends JPanel {
     private Image tankImage;
     private boolean isShooting = false; 
     private List<Bullet> bullets  = new ArrayList<>(); 
+    private List<Satellite> satellites  = new ArrayList<>(); 
     public List<EnemyIcon> enemies = new ArrayList<>();
-    private  double rotationSpeedFactor = 1; // Adjust this value to change the speed (increase for slower, decrease for faster)
-
+    private  double rotationSpeedFactor = 1; 
 
 
     public EnemyIcon findClosestEnemy() {
@@ -72,27 +72,17 @@ public class TankIcon extends JPanel {
         this.tank.setY(tankY);
         g.drawImage(tankImage, tankX-20, tankY-10, Tank.TANK_WIDTH, Tank.TANK_HEIGHT, this);
 
+
+
         // The revolving ball
-        int ballRadius = 5; // Adjust the radius as needed
-        double ballCenterX = this.tank.getX()+20 ; // Adjust the distance from the tank center
-        double ballCenterY = this.tank.getY()+10;
 
-        rotationSpeedFactor += 0.1;
-        int numBalls = 2;
-
-        // Define colors for the balls
-        Color[] ballColors = {Color.GREEN, Color.BLUE, Color.RED}; 
-        Graphics2D g2d = (Graphics2D) g.create();
-
-        // Draw multiple revolving balls
-        for (int i = 0; i < numBalls; i++) {
-            double ratio = (double)i/(1);
-            int ballX = (int) (ballCenterX + Math.cos(rotationSpeedFactor+(ratio)) * tank.radius);
-            int ballY = (int) (ballCenterY + Math.sin(rotationSpeedFactor+(ratio)) * tank.radius);
-            g2d.setColor(ballColors[i]);
-            g2d.fillOval(ballX - ballRadius, ballY - ballRadius, 2 * ballRadius, 2 * ballRadius);
+        for (Satellite satellite : satellites){
+            SatelliteIcon satelliteIcon = new SatelliteIcon(satellite);
+            satelliteIcon.paintComponent(g);
+            satelliteIcon.getSatellite().move();
         }
-        
+
+
         List<EnemyIcon> enemiesToRemove = new ArrayList<>();
         for (EnemyIcon enemyIcon : enemies) {
             Enemy enemy = enemyIcon.getEnemy();
@@ -135,6 +125,11 @@ public class TankIcon extends JPanel {
 
     public void addBullet(Bullet bullet) {
         bullets.add(bullet);
+        repaint();
+    }
+
+    public void addSatellite(Satellite sattelite){
+        satellites.add(sattelite);
         repaint();
     }
 
