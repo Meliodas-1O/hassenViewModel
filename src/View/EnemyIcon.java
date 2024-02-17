@@ -22,7 +22,7 @@ public class EnemyIcon extends JPanel {
         ImageIcon icon = new ImageIcon(imagePath);
         if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
             enemyImage = icon.getImage();
-            enemy = new Enemy(x, y, 0, 100); 
+            enemy = new Enemy(x, y, 0.5, 100); 
         } else {
             System.err.println("Failed to load image: " + imagePath);
         }

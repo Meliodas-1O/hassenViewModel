@@ -17,7 +17,7 @@ public class Tank extends Vehicule{
     }
 
     public void shoot(TankIcon tankIcon) {
-        Bullet bullet = new Bullet(this.getX(), this.getY(), 30, 120);
+        Bullet bullet = new Bullet(this.getX(), this.getY(), 3, 120);
         tankIcon.addBullet(bullet);
     }
 }

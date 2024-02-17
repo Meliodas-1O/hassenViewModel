@@ -6,16 +6,16 @@ import Models.Vehicule;
 
 public class PhysicsManager {
     
-    public static void moveObject(Vehicule A, Vehicule B){
-        moveCoordinate(A, B, A.getX(), B.getX(), true);
-        moveCoordinate(A, B, A.getY(), B.getY(), false);
+    public static void moveObject(Vehicule A, Vehicule B, double speed){
+        moveCoordinate(A, B, A.getX(), B.getX(),speed, true);
+        moveCoordinate(A, B, A.getY(), B.getY(),speed, false);
     }
 
-    private static void moveCoordinate(Vehicule A, Vehicule B, double current, double target, boolean isXAxis) {
+    private static void moveCoordinate(Vehicule A, Vehicule B, double current, double target, double speed, boolean isXAxis) {
         if (current < target) {
-            updateCoordinate(A, current, 1, isXAxis);
+            updateCoordinate(A, current, speed, isXAxis);
         } else if (current > target) {
-            updateCoordinate(A, current, -1, isXAxis);
+            updateCoordinate(A, current, -speed, isXAxis);
         }
     }
 

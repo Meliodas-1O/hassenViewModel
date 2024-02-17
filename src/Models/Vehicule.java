@@ -4,10 +4,10 @@ public abstract class Vehicule {
     
     private double x;
     private double y;
-    public int speed;
+    public double speed;
     public int life;
 
-    public Vehicule(double x, double y, int speed, int life) {
+    public Vehicule(double x, double y, double speed, int life) {
         this.x = x;
         this.y = y;
         this.speed = speed;
