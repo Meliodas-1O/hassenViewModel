@@ -9,12 +9,14 @@ import Models.Satellite;
 import Models.Tank;
 import Utils.PhysicsManager;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TankIcon extends JPanel {
     private Tank tank;
@@ -24,18 +26,20 @@ public class TankIcon extends JPanel {
     private List<Satellite> satellites  = new ArrayList<>(); 
     public List<EnemyIcon> enemies = new ArrayList<>();
 
+    private int killedEnemies = 0;
 
-    public EnemyIcon findClosestEnemy() {
+    public EnemyIcon findClosestEnemy( List<EnemyIcon> listEnemies) {
         double closestDistance = Double.MAX_VALUE;
         EnemyIcon closestEnemy = null;
-        Tank playerTank = this.tank;
-        
-        for (EnemyIcon enemyIcon : enemies) {
+        Tank playerTank = this.tank;  
+        for (EnemyIcon enemyIcon : listEnemies) {
             Enemy enemy = enemyIcon.getEnemy();
             double distance = PhysicsManager.distance(playerTank, enemy);
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestEnemy = enemyIcon;
+            if(distance < tank.radius + 100){
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestEnemy = enemyIcon;
+                }
             }
         }
         return closestEnemy;
@@ -49,7 +53,7 @@ public class TankIcon extends JPanel {
         ImageIcon icon = new ImageIcon(imagePath);
         if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
             this.tankImage = icon.getImage();
-            tank = new Tank(0,0, 0, 2000, 1000, 100);
+            tank = new Tank(0,0, 0, 2000, 1);
         
         } else {
             System.err.println("Failed to load image: " + imagePath);
@@ -70,7 +74,6 @@ public class TankIcon extends JPanel {
         this.tank.setY(tankY);
         g.drawImage(tankImage, tankX-20, tankY-10, Tank.TANK_WIDTH, Tank.TANK_HEIGHT, this);
 
-
         List<EnemyIcon> enemiesToRemove = new ArrayList<>();
 
         // The revolving ball
@@ -88,9 +91,11 @@ public class TankIcon extends JPanel {
             }
         }
 
-
-
-        enemies.removeAll(enemiesToRemove);
+        // The radius
+        g.setColor(Color.ORANGE);
+        int circleRadius = this.tank.radius;
+        g.drawOval(centerX - circleRadius, centerY - circleRadius, 2 * circleRadius, 2 * circleRadius);
+    
 
         // The bullets
         List<Bullet> bulletsToRemove = new ArrayList<>();
@@ -98,19 +103,21 @@ public class TankIcon extends JPanel {
         for (Bullet bullet : bullets) {
             BulletIcon bulletIcon = new BulletIcon(bullet);
             bulletIcon.paintComponent(g);
-            EnemyIcon randomEnemyIcon = findClosestEnemy();
-            if (randomEnemyIcon != null) {
-                bulletIcon.getBullet().setTarget(randomEnemyIcon.getEnemy());
+            List<EnemyIcon> closestEnemies = enemies.stream().filter(e -> e.getEnemy() == bullet.getTarget()).collect(Collectors.toList());
+            
+            if (closestEnemies.size() != 0) {
                 bulletIcon.getBullet().move();
-                if (bulletIcon.getBullet().hasHit(randomEnemyIcon.getEnemy()) || bullet.getTarget().life==0) {
+                bulletIcon.getBullet().hasHit();
+                if (bullet.getTarget().life==0) {
                     bulletsToRemove.add(bullet);
-                    enemiesToRemove.add(randomEnemyIcon);
+                    enemiesToRemove.add(closestEnemies.get(0));
                 }
             } else {
                 bulletsToRemove.add(bullet);
             }
         }
-        
+        killedEnemies += enemiesToRemove.size();
+        tank.setLevel(this,killedEnemies/10);
         bullets.removeAll(bulletsToRemove);
         enemies.removeAll(enemiesToRemove);
 
@@ -151,5 +158,9 @@ public class TankIcon extends JPanel {
 
     public List<EnemyIcon> getEnemies() {
         return enemies;
+    }
+
+    public int getKilledEnemies(){
+        return killedEnemies;
     }
 }

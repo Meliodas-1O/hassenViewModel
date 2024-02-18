@@ -5,15 +5,21 @@ import Utils.PhysicsManager;
 public class Bullet extends Vehicule{
 
     private Enemy target;
+    public static final int BULLET_WIDTH = 10;
+    public static final int BULLET_HEIGHT = 10;
 
-    public Bullet(double x, double y, int speed, int life, Enemy target) {
+    public Bullet(double x, double y, double speed, int life, Enemy target) {
         super(x, y, speed, life);
-        this.target = target;
+        if(this.target == null && !target.isTargeted){
+            this.target = target;
+            target.isTargeted = true;
+        }
     }
 
     public void setTarget(Enemy newTarget){
         if(this.target == null){
             this.target = newTarget;
+            newTarget.isTargeted = true;
         }
     }
 
@@ -21,13 +27,8 @@ public class Bullet extends Vehicule{
         return this.target;
 
     }
-    
-    public Bullet(double x, double y, int speed, int life) {
-        super(x, y, speed, life);
-    }
 
-    public static final int BULLET_WIDTH = 10;
-    public static final int BULLET_HEIGHT = 10;
+
 
     public void move(){
         PhysicsManager.moveObject(this, this.target, speed);
@@ -38,8 +39,8 @@ public class Bullet extends Vehicule{
         }
     }
     
-    public boolean hasHit(Vehicule v){
-        return PhysicsManager.isColliding(this, v);
+    public boolean hasHit(){
+        return PhysicsManager.isColliding(this, target);
     }
  
 }

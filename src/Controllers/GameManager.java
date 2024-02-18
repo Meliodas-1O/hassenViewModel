@@ -2,27 +2,27 @@ package Controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.Timer;
-import Models.Bullet;
 import View.EnemyIcon;
 import View.TankIcon;
 
 public class GameManager implements ActionListener {
     
-    private List<EnemyIcon> enemies = new ArrayList<>();
     private TankIcon tankIcon;
     private Timer timer;
-    private Timer shootTimer; // Timer for shooting bullets
+    private Timer shootTimer; 
+    private JLabel killedLabel;
+    private JLabel levelLabel;
 
-
-    public GameManager(TankIcon tankIcon) {
+    public GameManager(TankIcon tankIcon, JLabel killedLabel, JLabel levLabel) {
         this.tankIcon = tankIcon;
+        this.killedLabel = killedLabel;
+        this.levelLabel = levLabel;
         this.timer = new Timer(20, this);
-        this.shootTimer = new Timer(1000, new ActionListener() {
+        this.shootTimer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handleShoot();
@@ -42,24 +42,15 @@ public class GameManager implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         addEnemyRandomly();
-        moveBullets();
-        moveEnemies(); 
         tankIcon.repaint();
+        killedLabel.setText("Killed ennemies : " + tankIcon.getKilledEnemies());
+        levelLabel.setText("Level : " + tankIcon.getTank().level + "    ");
     }
 
-    private void moveBullets() {
-        for (Bullet bullet : tankIcon.getBullets()) {
-            EnemyIcon icon = tankIcon.findClosestEnemy();
-            if(icon != null){
-                bullet.setTarget(icon.getEnemy());
-                bullet.move();
-            }
-        }
-    }
 
     private void addEnemyRandomly() {
         Random random = new Random();
-        if((random.nextInt(1000 - 200) + 100)%20==0 ){
+        if((random.nextInt(1000 - 200) + 100)%19==0 ){
             int enemyX = random.nextInt(1000 - 200) + 100;
             int enemyY = random.nextInt(1000 - 200) + 100;
             EnemyIcon enemyIcon = new EnemyIcon(enemyX, enemyY);
@@ -67,18 +58,13 @@ public class GameManager implements ActionListener {
         }        
     }
 
-    private void moveEnemies() {
-        for (EnemyIcon enemyIcon : enemies) {
-            enemyIcon.getEnemy().attack(tankIcon.getTank());
-        }
-    }
 
     public void handleShoot() {
-        tankIcon.getTank().shoot(tankIcon);
+        EnemyIcon target = tankIcon.findClosestEnemy(tankIcon.enemies);
+        if(target != null)
+        tankIcon.getTank().shootTarget(tankIcon, target.getEnemy());
     }
-    public void addSatellite(){
-        tankIcon.getTank().moveSatellite(tankIcon);
-    }
+
 
     public void addEnemy(EnemyIcon enemyIcon) {
         tankIcon.enemies.add(enemyIcon);

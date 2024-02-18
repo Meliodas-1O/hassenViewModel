@@ -6,7 +6,6 @@ public class Satellite extends Vehicule{
 
     private Tank tank;
 
-    
     public static final int SATELLITE_WIDTH = 10;
     public static final int SATELLITE_HEIGHT = 10;
 
@@ -24,7 +23,7 @@ public class Satellite extends Vehicule{
         double ballCenterY = this.tank.getY()+10;
         this.setX(ballCenterX + Math.cos(speed) * tank.radius) ;
         this.setY(ballCenterY + Math.sin(speed) * tank.radius);   
-        speed += 0.01;     
+        speed += 0.1;     
     }
 
 }
