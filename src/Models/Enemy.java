@@ -14,7 +14,7 @@ public class Enemy extends Vehicule{
     }
 
     public void attack(Tank playerTank){
-        PhysicsManager.moveObject(this, playerTank, 0.1);
-    }
+        PhysicsManager.moveObject(this, playerTank, speed);
+    }  
     
 }

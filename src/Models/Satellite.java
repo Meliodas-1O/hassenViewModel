@@ -6,8 +6,8 @@ public class Satellite extends Vehicule{
 
     private Tank tank;
 
-    public static final int SATELLITE_WIDTH = 10;
-    public static final int SATELLITE_HEIGHT = 10;
+    public static final int SATELLITE_WIDTH = 15;
+    public static final int SATELLITE_HEIGHT = 15;
 
     public Satellite(double x, double y, double speed, int life, Tank tank) {
         super(x, y, speed, life);

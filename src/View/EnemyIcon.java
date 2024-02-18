@@ -14,7 +14,8 @@ public class EnemyIcon extends JPanel {
     private Enemy enemy;
     private Image enemyImage;
 
-    public EnemyIcon(double x, double y) {
+    public EnemyIcon(double x, double y, int level) {
+
         String imageName = "enemy.png";
         String currentDirectory = System.getProperty("user.dir");
         String siblingDirectoryPath = currentDirectory + File.separator + "assets"+ File.separator + "images";
@@ -22,7 +23,7 @@ public class EnemyIcon extends JPanel {
         ImageIcon icon = new ImageIcon(imagePath);
         if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
             enemyImage = icon.getImage();
-            enemy = new Enemy(x, y, 0.5, 100); 
+            enemy = new Enemy(x, y, (double)level/2, 100); 
         } else {
             System.err.println("Failed to load image: " + imagePath);
         }

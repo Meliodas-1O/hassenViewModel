@@ -25,7 +25,6 @@ public class Tank extends Vehicule{
     }
 
     public void shootTarget(TankIcon tankIcon, Enemy enemy){
-        System.out.println(level);
         if(!enemy.isTargeted){
             Bullet bullet = new Bullet(this.getX(), this.getY(), 1+level*0.125, 120, enemy);
             tankIcon.addBullet(bullet);        

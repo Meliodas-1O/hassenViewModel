@@ -1,10 +1,12 @@
 package Controllers;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 import View.EnemyIcon;
 import View.TankIcon;
@@ -16,11 +18,13 @@ public class GameManager implements ActionListener {
     private Timer shootTimer; 
     private JLabel killedLabel;
     private JLabel levelLabel;
+    private JPanel healthBar;
 
-    public GameManager(TankIcon tankIcon, JLabel killedLabel, JLabel levLabel) {
+    public GameManager(TankIcon tankIcon, JLabel killedLabel, JLabel levLabel, JPanel healthBar) {
         this.tankIcon = tankIcon;
         this.killedLabel = killedLabel;
         this.levelLabel = levLabel;
+        this.healthBar = healthBar;
         this.timer = new Timer(20, this);
         this.shootTimer = new Timer(100, new ActionListener() {
             @Override
@@ -41,10 +45,20 @@ public class GameManager implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        addEnemyRandomly();
         tankIcon.repaint();
+        addEnemyRandomly();
+        int tankHealth = tankIcon.getTank().radius;
+        int maxHealth = 300; 
+        double healthPercentage = (double) tankHealth / maxHealth;
+        int barWidth = (int) (healthPercentage * 100);
+        System.out.println(healthBar.getSize());
+
         killedLabel.setText("Killed ennemies : " + tankIcon.getKilledEnemies());
         levelLabel.setText("Level : " + tankIcon.getTank().level + "    ");
+        if(healthBar.getSize().width > 1080){
+            //healthBar.setSize(new Dimension(maxHealth, 20));
+            //healthBar.setPreferredSize(new Dimension(barWidth, 20));
+        }
     }
 
 
@@ -53,7 +67,7 @@ public class GameManager implements ActionListener {
         if((random.nextInt(1000 - 200) + 100)%19==0 ){
             int enemyX = random.nextInt(1000 - 200) + 100;
             int enemyY = random.nextInt(1000 - 200) + 100;
-            EnemyIcon enemyIcon = new EnemyIcon(enemyX, enemyY);
+            EnemyIcon enemyIcon = new EnemyIcon(enemyX, enemyY, tankIcon.getTank().level);
             addEnemy(enemyIcon);
         }        
     }

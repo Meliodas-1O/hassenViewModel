@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+
 import Controllers.GameManager;
 
 import javax.swing.JFrame;
@@ -39,12 +40,19 @@ public class Main {
         levelLabel.setForeground(Color.WHITE); 
         levelLabel.setFont(new Font("Arial", Font.BOLD, 16)); 
 
+        JPanel healthBar = new JPanel ();
+        healthBar.setOpaque(true);
+        healthBar.setBackground(Color.RED);
+        healthBar.setPreferredSize(new Dimension(0, 20));
+        healthBar.setSize(new Dimension(0, 20));
+
         // Add components to the top bar panel
         topBarPanel.add(killedLabel, BorderLayout.WEST);
         topBarPanel.add(scoreLabel, BorderLayout.CENTER);
         topBarPanel.add(levelLabel, BorderLayout.EAST);
+        topBarPanel.add(healthBar, BorderLayout.SOUTH);
 
-        GameManager gameManager = new GameManager(tankIcon, killedLabel, levelLabel);
+        GameManager gameManager = new GameManager(tankIcon, killedLabel, levelLabel, healthBar);
 
         JFrame frame = new JFrame("Tank Icon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,7 +61,7 @@ public class Main {
         frame.add(topBarPanel, BorderLayout.NORTH); 
         frame.add(tankIcon, BorderLayout.CENTER);
         frame.pack(); 
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
 
 
@@ -63,7 +71,7 @@ public class Main {
         for (int i = 0; i < 1; i++) {
             int enemyX = random.nextInt(frame.getWidth() - 200) + 100;
             int enemyY = random.nextInt(frame.getHeight() - 200) + 100;
-            EnemyIcon enemyIcon = new EnemyIcon(enemyX, enemyY);
+            EnemyIcon enemyIcon = new EnemyIcon(enemyX, enemyY,  tankIcon.getTank().level);
             gameManager.addEnemy(enemyIcon);
         }
 

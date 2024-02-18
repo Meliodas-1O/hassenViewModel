@@ -28,8 +28,6 @@ public class Bullet extends Vehicule{
 
     }
 
-
-
     public void move(){
         PhysicsManager.moveObject(this, this.target, speed);
 
